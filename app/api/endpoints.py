@@ -4,12 +4,23 @@ from pathlib import Path
 
 from fastapi import APIRouter, UploadFile, File, Form, BackgroundTasks, HTTPException
 from pydantic import BaseModel
-from app.services.ingest import process_document_task, generate_vectors,celery_app
+
+
+from app.services.ingest import (
+    process_document_task,
+    generate_vectors,
+    celery_app,
+    get_index_mapping,
+)
+from app.core.config import QueryRequest, QueryResponse
+from app.core.embedding import embeddings_base
+from app.services.vector_db import vector_db
+from app.services.llm_service import llm_service
 
 class EmbeddingRequest(BaseModel):
     filename: str
-    embedding_size: str 
-    index_name: str
+    embedding_size: str
+    strategy: str
 
 router = APIRouter()
 
@@ -61,18 +72,24 @@ def get_status(task_id: str):
         "result": result.result
     }
 
-@router.post("/embed/{index_name}")
+@router.post("/embed")
 async def embed_existing_document(request: EmbeddingRequest):
 
     file_path = OUTPUT_DIR / request.filename
     if not file_path.exists():
         raise HTTPException(status_code=404, detail=f"File {request.filename} not found.")
-    result = generate_vectors.delay(request.filename, request.embedding_size, request.index_name)
+    if request.embedding_size not in {"small", "medium", "large"}:
+        raise HTTPException(status_code=400, detail="Invalid embedding size. Choose from 'small', 'medium', 'large'.")
+    if request.strategy not in {"recursive", "semantic", "length"}:
+        raise HTTPException(status_code=400, detail="Invalid strategy. Choose from 'recursive', 'semantic', 'length'.")
+
+    target_index = f"rag_{Path(request.filename).stem}"
+    result = generate_vectors.delay(request.filename, request.embedding_size, request.strategy)
 
     return {
         "message": "Embedding process started.",
         "details": result.id,
-        "target_index": request.index_name
+        "target_index": target_index
     }
 
 @router.get("/list-chunks")
@@ -84,3 +101,61 @@ def list_uploaded_chunks():
     return {
         "uploaded_files": files
     }
+
+@router.post("/query", response_model=QueryResponse)
+async def process_query_rag(request: QueryRequest):
+    """
+    Process a user query using RAG with the specified chunking strategy.
+    """
+
+    print(f"API Receieved query: {request.question} ") 
+
+    if request.embedding_size not in {"small", "medium", "large"}:
+        raise HTTPException(status_code=400, detail="Invalid embedding size. Choose from 'small', 'medium', 'large'.")
+    if request.strategy not in {"recursive", "semantic", "length"}:
+        raise HTTPException(status_code=400, detail="Invalid strategy. Choose from 'recursive', 'semantic', 'length'.")
+
+    mapping = get_index_mapping(request.strategy, request.embedding_size)
+    if not mapping:
+        raise HTTPException(
+            status_code=404,
+            detail="No embedded index found for the selected strategy and embedding size. Run /embed first."
+        )
+
+    target_index = mapping["index_name"]
+    print(f"API: Searching index '{target_index}' for query.")
+
+    if request.embedding_size == "small":
+        query_vector = embeddings_base.sentence_transformer_small.embed_query(request.question)
+    elif request.embedding_size == "medium":
+        query_vector = embeddings_base.sentence_transformer_medium.embed_query(request.question)
+    else:
+        query_vector = embeddings_base.sentence_transformer_large.embed_query(request.question)
+
+    retrieved_chunks = vector_db.search(target_index, query_vector, top_k=5)
+
+    print(f"API: Retrieved {len(retrieved_chunks)} chunks from index '{target_index}'.")
+
+    context_chunks = []
+    for chunk in retrieved_chunks:
+        text = chunk.get("text") or chunk.get("content") or chunk.get("page_content")
+        if not text:
+            continue
+        context_chunks.append({
+            "text": text,
+            "metadata": chunk.get("metadata", {})
+        })
+
+    if not context_chunks:
+        raise HTTPException(
+            status_code=404,
+            detail="Retrieved chunks did not contain any text content to feed the LLM."
+        )
+
+    answer = llm_service.get_answer(request.question, context_chunks)
+
+    return {
+        "answer": answer,
+        "sources": [chunk["metadata"] for chunk in context_chunks if not chunk["metadata"]["keywords"]]
+    }
+    

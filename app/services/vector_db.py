@@ -66,6 +66,34 @@ class VectorDB:
         success, errors = helpers.bulk(self.es_client, actions)
         print(f"vector_db: 🚀 Inserted {success} documents into index '{index_name}'.")
         return success
+    
+    def search(self, index_name:str, query_vector: list, top_k: int=5):
+        """
+        Searches the Elasticsearch index for the top_k most similar documents to the query_vector.
+        """
+        if not self.es_client.indices.exists(index=index_name):
+            print(f"vector_db: Index '{index_name}' does not exist.")
+            return []
+        
+        response = self.es_client.search(
+            index=index_name,
+            knn={
+                "field": "vector",
+                "query_vector": query_vector,
+                "k": top_k,
+                "num_candidates": 100
+            },
+            source={"includes": ["text", "metadata"]}
+        )
+
+        results = []
+        for hit in response['hits']['hits']:
+            results.append({
+                "text": hit['_source']['text'],
+                "metadata": hit['_source']['metadata'],
+                "score": hit['_score']
+            })
+        return results
 
 # Initialize global instance
 vector_db = VectorDB()

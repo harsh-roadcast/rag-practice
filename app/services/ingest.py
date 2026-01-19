@@ -1,8 +1,13 @@
 import os
 import json
+from datetime import datetime
+from pathlib import Path
+from typing import Dict, Optional
+
 from celery import Celery
 from langchain_core.documents import Document
 from langchain_community.document_loaders import PyPDFLoader
+
 from app.core.chunking import chunker_service
 from app.core.embedding import embeddings_base
 from app.services.vector_db import vector_db  # Import the vector_db module
@@ -17,6 +22,45 @@ celery_app = Celery(
 # Define where to save the JSON files
 OUTPUT_DIR = "data/output"
 os.makedirs(OUTPUT_DIR, exist_ok=True)
+INDEX_REGISTRY_PATH = os.path.join(OUTPUT_DIR, "index_registry.json")
+
+
+def _load_index_registry() -> Dict[str, Dict[str, str]]:
+    if not os.path.exists(INDEX_REGISTRY_PATH):
+        return {}
+    with open(INDEX_REGISTRY_PATH, "r", encoding="utf-8") as f:
+        return json.load(f)
+
+
+def _save_index_registry(registry: Dict[str, Dict[str, str]]) -> None:
+    with open(INDEX_REGISTRY_PATH, "w", encoding="utf-8") as f:
+        json.dump(registry, f, indent=4, ensure_ascii=False)
+
+
+def record_index_mapping(strategy: str, embedding_size: str, index_name: str, source_file: str) -> None:
+    registry = _load_index_registry()
+    key = f"{strategy}:{embedding_size}"
+    registry[key] = {
+        "index_name": index_name,
+        "source_file": source_file,
+        "strategy": strategy,
+        "embedding_size": embedding_size,
+        "updated_at": datetime.utcnow().isoformat()
+    }
+    _save_index_registry(registry)
+
+
+def get_index_mapping(strategy: str, embedding_size: str) -> Optional[Dict[str, str]]:
+    registry = _load_index_registry()
+    return registry.get(f"{strategy}:{embedding_size}")
+
+
+def _infer_strategy_from_filename(json_filename: str) -> str:
+    stem = Path(json_filename).stem
+    parts = stem.split("_")
+    if len(parts) >= 2:
+        return parts[-2]
+    return "recursive"
 
 def save_chunks_to_json(chunks, filename):
     """
@@ -37,7 +81,7 @@ def save_chunks_to_json(chunks, filename):
     return filepath
 
 @celery_app.task
-def generate_vectors(json_filename:str, embedding_size: str = "medium",index_name: str = "rag_index"):
+def generate_vectors(json_filename: str, embedding_size: str = "medium", strategy: Optional[str] = None):
     """
     Docstring for generate_vectors
     
@@ -66,6 +110,9 @@ def generate_vectors(json_filename:str, embedding_size: str = "medium",index_nam
     else:
         embeddings = embeddings_base.sentence_transformer_large
         dims = 1024
+
+    strategy = strategy or _infer_strategy_from_filename(json_filename)
+    index_name = f"rag_{Path(json_filename).stem}"
 
     print(f"worker: checked/created index {index_name} with dims {dims}")
     
@@ -103,6 +150,8 @@ def generate_vectors(json_filename:str, embedding_size: str = "medium",index_nam
         total_uploaded += len(batch_docs)
         print(f"worker: Uploaded {total_uploaded} / {total_chunks} chunks so far.")
    
+
+    record_index_mapping(strategy=strategy, embedding_size=embedding_size, index_name=index_name, source_file=json_filename)
 
     return {
         "status": "success",
