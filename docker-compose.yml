@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  # 1. The Vector Database
+  elastisearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.17.0
+    container_name: elasticsearch
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false    # Disable login/HTTPS for easy dev
+      - ES_JAVA_OPTS=-Xms1g -Xmx1g      # CRITICAL: Limit RAM to 1GB
+    ports:
+      - "9200:9200"
+    volumes:
+      - ./es_data:/usr/share/elasticsearch/data
+    deploy:
+      resources:
+        limits:
+          memory: 2g
+    restart: always
+
+  # 2. The Task Broker
+  redis:
+    image: redis:7-alpine
+    container_name: bolt-redis
+    ports:
+      - "6379:6379"
+    restart: always
