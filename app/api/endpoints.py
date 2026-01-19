@@ -153,9 +153,13 @@ async def process_query_rag(request: QueryRequest):
         )
 
     answer = llm_service.get_answer(request.question, context_chunks)
-
+    sources = []
+    for chunk in context_chunks:
+        metadata = dict(chunk["metadata"])
+        metadata.pop("keywords", None)
+        sources.append(metadata)
     return {
         "answer": answer,
-        "sources": [chunk["metadata"] for chunk in context_chunks if not chunk["metadata"]["keywords"]]
+        "sources": sources
     }
     
