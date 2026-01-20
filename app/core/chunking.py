@@ -13,7 +13,7 @@ except ModuleNotFoundError:  # fallback for running as a script inside app/core
 
 
 class Chunker:
-    def __init__(self, chunk_size: int = 1000, chunk_overlap: int = 200):
+    def __init__(self):
         self.embedder = embeddings_base
 
     def chunk_text_recursive(self, documents: List[Document],chunk_size: int = 1000, chunk_overlap: int = 100) -> List[Document]:
@@ -62,11 +62,11 @@ class Chunker:
         """
         
         if embedding_type == "small":
-            embeddings = self.embedder._sentence_transformer_small
+            embeddings = self.embedder.sentence_transformer_small
         elif embedding_type == "medium":
-            embeddings = self.embedder._sentence_transformer_medium
+            embeddings = self.embedder.sentence_transformer_medium
         else:
-            embeddings = self.embedder._sentence_transformer_large
+            embeddings = self.embedder.sentence_transformer_large
         
         if embeddings is None:
             raise ValueError(f"Embedding model for type {embedding_type} is not initialized.")

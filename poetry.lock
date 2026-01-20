@@ -1776,6 +1776,18 @@ typing-extensions = ">=4.7.0,<5.0.0"
 uuid-utils = ">=0.12.0,<1.0"
 
 [[package]]
+name = "langchain-elasticsearh"
+version = "2.1.1"
+description = "AnupamAS01"
+optional = false
+python-versions = "*"
+groups = ["main"]
+files = [
+    {file = "langchain_elasticsearh-2.1.1-py3-none-any.whl", hash = "sha256:8c283e36a046407cd34accc4c53ba0db13cd36aaba89165ce7f63a52dd459b4b"},
+    {file = "langchain_elasticsearh-2.1.1.tar.gz", hash = "sha256:65dba504cbb2d58150363af902be30b8cb7a8c487ba147edd2cdd07210ae3035"},
+]
+
+[[package]]
 name = "langchain-experimental"
 version = "0.4.1"
 description = "Building applications with LLMs through composability"
@@ -6263,4 +6275,4 @@ cffi = ["cffi (>=1.17,<2.0) ; platform_python_implementation != \"PyPy\" and pyt
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.10 <4.0"
-content-hash = "e0c105341c7c6bc31da9c08241ca05a91c9ade3428767deea8991f0954afb7d2"
+content-hash = "bc17a68fb55e78ea0bbe4d7206c8306dd1edda432c398513594bdbb1097297fe"

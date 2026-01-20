@@ -140,7 +140,12 @@ def generate_vectors(json_filename: str, embedding_size: str = "medium", strateg
         
         # Embed just this small batch
         batch_texts = [item["content"] for item in batch_items]
-        batch_docs = [Document(page_content=item["content"], metadata=item["metadata"]) for item in batch_items]
+        # Fixed: Inject chunk_id into metadata so it is indexed in Elasticsearch
+        batch_docs = []
+        for item in batch_items:
+            meta = item["metadata"].copy()
+            meta["chunk_id"] = item["chunk_id"]
+            batch_docs.append(Document(page_content=item["content"], metadata=meta))
 
         try:
             vectors = embeddings.embed_documents(batch_texts)
