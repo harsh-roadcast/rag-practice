@@ -50,10 +50,6 @@ def record_index_mapping(strategy: str, embedding_size: str, index_name: str, so
     _save_index_registry(registry)
 
 
-def get_index_mapping(strategy: str, embedding_size: str) -> Optional[Dict[str, str]]:
-    registry = _load_index_registry()
-    return registry.get(f"{strategy}:{embedding_size}")
-
 
 def _infer_strategy_from_filename(json_filename: str) -> str:
     stem = Path(json_filename).stem
@@ -79,6 +75,14 @@ def save_chunks_to_json(chunks, filename):
         json.dump(data, f, indent=4, ensure_ascii=False)
     
     return filepath
+
+def parse_chunk_metadata(json_filename:str)-> tuple[str,str]:
+    """ Extract strategy and embedding size from filename """
+    stem = Path(json_filename).stem
+    parts = stem.split("_")
+    if len(parts)>=2:
+        return parts[-2], parts[-1]
+    raise ValueError(f"Filename {json_filename} doesn't match pattern: name_strategy_size.json")
 
 @celery_app.task
 def generate_vectors(json_filename: str, embedding_size: str = "medium", strategy: Optional[str] = None):
