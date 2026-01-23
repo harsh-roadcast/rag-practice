@@ -1,0 +1,352 @@
+[
+    {
+        "id": "0",
+        "source_chunk_id": 4087,
+        "question": "What new feature was added in version 2.1.2 to support Windows 2008+ during the first boot?",
+        "ground_truth": "The addition of a feature to dynamically expand the Root Volume on first boot for Windows 2008+ was added in version 2.1.2.",
+        "source_text": "Amazon Elastic Compute Cloud User Guide\nVersion Details Release date\n2.1.2 •\nConsole timestamps in UTC (Zulu)\n•\nRemoved appearance of hyperlink on Sysprep tab\n•\nAddition of feature to dynamically expand Root Volume on  \n ﬁrst boot for Windows 2008+\n•\nWhen Set-Password is enabled, now automatically enables   \nEC2Conﬁg to set the password\n•\nEC2Conﬁg checks activation status prior to running  Sysprep \n(presents warning if not activated)\n•\nWindows Server 2003 Sysprep.xml  now defaults to UTC \ntimezone   instead of Paciﬁc\n•\nRandomized Activation Servers\n•\nRenamed Drive Mapping tab to Disk Settings\n•\nMoved Initialize Drives UI items from General to the Disk  Set \ntings tab\n•\nHelp button now points to HTML help ﬁle\n•\nUpdated HTML help ﬁle with changes\n•\nUpdated 'Note' text for Drive Letter Mappings\n•\nAdded InstallUpdates.ps1 to /Scripts folder for automating  \n Patches and cleanup prior to Sysprep\n \nWindows launch agents 2035"
+    },
+    {
+        "id": "1",
+        "source_chunk_id": 2494,
+        "question": "When does your subscription start if you choose the 'Subscribe now' option when launching an Amazon EC2 instance?",
+        "ground_truth": "Your subscription starts immediately when you choose the 'Subscribe now' option.",
+        "source_text": "Amazon Elastic Compute Cloud User Guide\n• Subscribe on instance launch – Your subscription starts when you choose Launch instance\n(at Step 10).\n• Subscribe now – Your subscription starts immediately. While the subscription is underway, \nyou can conﬁgure the instance by continuing with the steps in this procedure. If there are \nany problems with your credit card details, you will be asked to update your account details.\nNote\nYou're not charged for using the product until you have launched an instance with the \nAMI. Take note of the pricing for each supported instance type when you select an \ninstance type. Additional taxes might also apply to the product.\n6. For Instance type, select an instance type for your instance. The instance type deﬁnes the \nhardware conﬁguration and size of the instance to launch.\n7. Under Key pair (login), for Key pair name, choose an existing key pair or create a new one."
+    },
+    {
+        "id": "2",
+        "source_chunk_id": 790,
+        "question": "What should you do to prevent an instance in an Auto Scaling group from being terminated when changing its instance type?",
+        "ground_truth": "You can suspend the scaling processes for the Auto Scaling group while changing the instance type to prevent the stopped instance from being marked as unhealthy and possibly terminated.",
+        "source_text": "a new public IPv4 address. For more information on IP address behavior throughout the lifecycle \nof an instance, see Diﬀerences between instance states.\n• You can't change the instance type of a Spot Instance.\n• [Windows instances] We recommend that you update the AWS PV driver package before \nchanging the instance type. For more information, see the section called “Upgrade PV drivers”.\n• If your instance is in an Auto Scaling group, the Amazon EC2 Auto Scaling service marks the \nstopped instance as unhealthy, and might terminate it and launch a replacement instance. To \nprevent this, you can suspend the scaling processes for the group while you're changing the \ninstance type. For more information, see Suspending and resuming a process for an Auto Scaling \ngroup in the Amazon EC2 Auto Scaling User Guide.\n• When you change the instance type of an instance with NVMe instance store volumes, the \nupdated instance might have additional instance store volumes, because all NVMe instance"
+    },
+    {
+        "id": "3",
+        "source_chunk_id": 7074,
+        "question": "How can you reset the Windows administrator password for an EC2 instance running Windows Server 2016 or later?",
+        "ground_truth": "You can use the EC2Rescue tool, which uses the EC2Launch service to generate a new password. If the AMI does not include the EC2Launch v2 agent, you can use EC2Launch v2 to generate a new password.",
+        "source_text": "Amazon Elastic Compute Cloud User Guide\n4. (Optional) If you have no further use for the temporary instance, you can terminate it. Select \nthe temporary instance, and choose Instance State, Terminate instance.\nReset Windows admin password for EC2 instance using EC2Launch\nIf you have lost your Windows administrator password and are using a Windows Server 2016 or \nlater AMI, you can use the EC2Rescue tool, which uses the EC2Launch service to generate a new \npassword.\nIf you are using a Windows Server 2016 or later AMI that does not include the EC2Launch v2 agent, \nyou can use EC2Launch v2 to generate a new password.\nIf you are using a Windows Server AMI earlier than Windows Server 2016, see Reset Windows \nadmin password for EC2 instance using EC2Conﬁg.\nWarning\nWhen you stop an instance, the data on any instance store volumes is erased. To keep data \nfrom instance store volumes, be sure to back it up to persistent storage.\nNote"
+    },
+    {
+        "id": "4",
+        "source_chunk_id": 5364,
+        "question": "How do you enable enhanced networking when registering a new AMI using the AWS CLI?",
+        "ground_truth": "Use the aws ec2 register-image command with the --sriov-net-support simple option.",
+        "source_text": "Follow the previous procedure until the step where you stop the instance. Create a new AMI as \ndescribed in Create an Amazon S3-backed AMI, making sure to enable the enhanced networking \nattribute when you register the AMI.\nAWS CLI\nUse the register-image command as follows.\naws ec2 register-image --sriov-net-support simple ...\nPowerShell\nUse Register-EC2Image as follows.\nRegister-EC2Image -SriovNetSupport \"simple\" ...\nWindows\nIf you launched your instance and it does not have enhanced networking enabled already, you \nmust download and install the required network adapter driver on your instance, and then set the\nsriovNetSupport instance attribute to activate enhanced networking. You can only enable this \nattribute on supported instance types. For more information, see Enhanced networking on Amazon \nEC2 instances.\nIntel 82599 VF 2647"
+    },
+    {
+        "id": "5",
+        "source_chunk_id": 6571,
+        "question": "What are some examples of problems that can cause instance status checks to fail on an Amazon EC2 instance?",
+        "ground_truth": "Examples of problems that may cause instance status checks to fail include failed system status checks, misconfigured networking or startup configuration, exhausted memory, and corrupted file system.",
+        "source_text": "the issue or you can resolve it yourself (for example, by stopping and restarting or terminating \nand replacing an instance). Examples of problems that cause system status checks to fail include:\n• Loss of network connectivity\n• Loss of system power\n• Software issues on the physical host\n• Hardware issues on the physical host that impact network reachability\nFor more information, see Status checks for Amazon EC2 instances.\n• Instance status checks – Monitor the software and network conﬁguration of your individual \ninstance. These checks detect problems that require your involvement to repair. When an \ninstance status check fails, typically you will need to address the problem yourself (for example, \nby rebooting the instance or by making modiﬁcations in your operating system). Examples of \nproblems that may cause instance status checks to fail include:\n• Failed system status checks\n• Misconﬁgured networking or startup conﬁguration\n• Exhausted memory\n• Corrupted ﬁle system"
+    },
+    {
+        "id": "6",
+        "source_chunk_id": 3054,
+        "question": "What does the ManagedBy field value 'account' indicate in the configuration settings?",
+        "ground_truth": "It indicates that the settings were configured directly in the account.",
+        "source_text": "The following is example output.\n{ \n    \"AccountLevel\": { \n        \"HttpTokens\": \"required\", \n        \"HttpPutResponseHopLimit\": 2 \n    }, \n    \"ManagedBy\": \"account\"\n}\nThe ManagedBy ﬁeld indicates the entity that conﬁgured the settings. In this example,\naccount indicates that the settings were conﬁgured directly in the account. A value of\ndeclarative-policy would mean the settings were conﬁgured by a declarative policy. For \nmore information, see Declarative policies in the AWS Organizations User Guide.\nTo set IMDSv2 as the default for the account for all Regions\nConﬁgure IMDS options 1538"
+    },
+    {
+        "id": "7",
+        "source_chunk_id": 1464,
+        "question": "What are the two scope options available when purchasing a Reserved Instance, and how are they defined?",
+        "ground_truth": "The two scope options are regional and zonal. A regional Reserved Instance is purchased for an entire Region, while a zonal Reserved Instance is purchased for a specific Availability Zone.",
+        "source_text": "For more information, see Types of Reserved Instances (oﬀering classes).\nImportant\nAfter you purchase a Reserved Instance, you cannot cancel your purchase. However, you \nmight be able to modify, exchange, or sell your Reserved Instance if your needs change.\nFor more information, see the Amazon EC2 Reserved Instances Pricing page.\nRegional and zonal Reserved Instances (scope)\nWhen you purchase a Reserved Instance, you determine the scope of the Reserved Instance. The \nscope is either regional or zonal.\n• Regional: When you purchase a Reserved Instance for a Region, it's referred to as a regional\nReserved Instance.\n• Zonal: When you purchase a Reserved Instance for a speciﬁc Availability Zone, it's referred to as a\nzonal Reserved Instance.\nReserved Instances 816"
+    },
+    {
+        "id": "8",
+        "source_chunk_id": 5030,
+        "question": "What command and parameter do you use in PowerShell to disassociate an Elastic IP address with the association ID eipassoc-12345678?",
+        "ground_truth": "Use the Unregister-EC2Address cmdlet with the parameter -AssociationId eipassoc-12345678.",
+        "source_text": "Amazon Elastic Compute Cloud User Guide\naws ec2 disassociate-address --association-id eipassoc-12345678\nPowerShell\nTo disassociate an Elastic IP address\nUse the Unregister-EC2Address cmdlet.\nUnregister-EC2Address -AssociationId eipassoc-12345678\nTransfer an Elastic IP address between AWS accounts\nYou can transfer an Elastic IP address from one AWS account to another. This can be helpful in the \nfollowing situations:\n• Disaster recovery – Quickly remap the IP addresses for public-facing internet workloads during \nemergency events.\n• Organizational restructuring – Quickly move a workload from one AWS account to another. \nAn address transfer avoids the need to wait for new Elastic IP addresses to be allowed by your \nsecurity groups and network ACLs.\n• Centralized security administration – Use a centralized AWS security account to track and \ntransfer Elastic IP addresses that have been vetted for security compliance.\nPricing\nThere is no charge for transferring Elastic IP addresses.\nTasks"
+    },
+    {
+        "id": "9",
+        "source_chunk_id": 6190,
+        "question": "What determines the volume limits for instances built on the Nitro System according to the Amazon Elastic Compute Cloud User Guide?",
+        "ground_truth": "The volume limits for instances built on the Nitro System depend on the instance type, with some Nitro instance types having a dedicated EBS volume limit and most having a shared volume limit.",
+        "source_text": "Amazon Elastic Compute Cloud User Guide\nContents\n• Volume limits for instances built on the Nitro System\n• Dedicated EBS volume limit\n• Shared EBS volume limit\n• Volume limits for Xen-based instances\n• Linux instances\n• Windows instances\nVolume limits for instances built on the Nitro System\nThe volume limits for instances built on the Nitro System depend on the instance type. Some Nitro \ninstance types have a dedicated EBS volume limit, while most have a shared volume limit. To \nview the volume attachment limits for each instance type, see the following:\n• Amazon EBS speciﬁcations – General purpose\n• Amazon EBS speciﬁcations – Compute optimized\n• Amazon EBS speciﬁcations – Memory optimized\n• Amazon EBS speciﬁcations – Storage optimized\n• Amazon EBS speciﬁcations – Accelerated computing\n• Amazon EBS speciﬁcations – High-performance computing\n• Amazon EBS speciﬁcations – Previous generation\nDedicated EBS volume limit"
+    },
+    {
+        "id": "10",
+        "source_chunk_id": 4015,
+        "question": "What setting in BundleConfig.xml enables the use of Sysprep automatically during EC2Config instance preparation?",
+        "ground_truth": "AutoSysprep",
+        "source_text": "true or false.\n• LogResultToConsole—Displays the result to the console.\nBundleConﬁg.xml\nThis ﬁle contains settings that control how EC2Conﬁg prepares an instance for AMI creation.\n• AutoSysprep—Indicates whether to use Sysprep automatically. Change the value to Yes to use \nSysprep.\n• SetRDPCertificate—Sets a self-signed certiﬁcate to the Remote Desktop server. This enables \nyou to securely RDP into the instances. Change the value to Yes if the new instances should have \nthe certiﬁcate.\nThis setting is not used for instances with operating system versions prior to Windows Server \n2016, because they can generate their own certiﬁcates.\n• SetPasswordAfterSysprep—Sets a random password on a newly launched instance, encrypts \nit with the user launch key, and outputs the encrypted password to the console. Change the \nvalue of this setting to No if the new instances should not be set to a random encrypted \npassword.\nConﬁg.xml\nPlug-ins\nWindows launch agents 1994"
+    },
+    {
+        "id": "11",
+        "source_chunk_id": 4893,
+        "question": "How can you assign two specific IPv6 addresses when launching an Amazon EC2 instance using the run-instances command?",
+        "ground_truth": "Use the run-instances command with the --ipv6-addresses option followed by the two IPv6 addresses, for example: --ipv6-addresses Ipv6Address=2001:db8::1234:5678:1.2.3.4 Ipv6Address=2001:db8::1234:5678:5.6.7.8",
+        "source_text": "Use the run-instances command with the --ipv6-addresses option. The following example \nassigns two IPv6 addresses.\n--ipv6-addresses Ipv6Address=2001:db8::1234:5678:1.2.3.4\n Ipv6Address=2001:db8::1234:5678:5.6.7.8\nTo let Amazon EC2 choose the IPv6 addresses, use the --ipv6-address-count option \ninstead. The following example assigns two IPv6 addresses.\n--ipv6-address-count 2\nTo assign an IPv6 address after launch\nUse the assign-ipv6-addresses command. The following example assigns two IPv6 addresses.\nIPv6 addresses 2397"
+    },
+    {
+        "id": "12",
+        "source_chunk_id": 2398,
+        "question": "What file format should you choose for the private key file when creating an ED25519 key pair in Amazon EC2?",
+        "ground_truth": "For the private key file format, choose .pem.",
+        "source_text": "ED25519 key.\nc. Choose the private key ﬁle format: For Private key ﬁle format, choose .pem.\nThis is the format in which your private key ﬁle will be saved.\n4. Save the public key to Amazon EC2 and download the private key:\nChoose the Create key pair button (bottom right).\nAmazon EC2 saves the public key, while your browser downloads the private key ﬁle \nautomatically to your local computer. The ﬁle is named according to the name that you \nspeciﬁed for the key pair, and the extension is the ﬁle format that you chose. Move the private \nkey ﬁle to a secure location on your computer.\nImportant\nThis is the only chance you'll have to save the private key ﬁle.\nTutorials 1237"
+    },
+    {
+        "id": "13",
+        "source_chunk_id": 2863,
+        "question": "What happens to instance store volumes when an Amazon EC2 instance is terminated, and how can you preserve their data?",
+        "ground_truth": "When an instance is terminated, the instance store volumes are automatically deleted and the data is lost. To preserve this data beyond the lifetime of the instance, you must manually copy the data to persistent storage such as an Amazon EBS volume, an Amazon S3 bucket, or an Amazon EFS file system before terminating the instance.",
+        "source_text": "Amazon Elastic Compute Cloud User Guide\n    -InstanceId i-1234567890abcdef0 ` \n    -InstanceInitiatedShutdownBehavior terminate\nPreserve data when an instance is terminated\nWhen an Amazon EC2 instance is terminated, you can preserve the data on your instance store \nvolumes or Amazon EBS volumes. This topic explains how to ensure your data persists beyond \ninstance termination.\nHow instance termination aﬀects root and data volumes\nInstance store volumes\nWhen an instance is terminated, the instance store volumes are automatically deleted and the data \nis lost. To preserve this data beyond the lifetime of the instance, before terminating the instance, \nmanually copy the data to persistent storage, such as an Amazon EBS volume, an Amazon S3 \nbucket, or an Amazon EFS ﬁle system. For more information, see Storage options for your Amazon \nEC2 instances.\nAmazon EBS volumes\nWhen an instance is terminated, the EBS volumes are either deleted or preserved, depending on"
+    },
+    {
+        "id": "14",
+        "source_chunk_id": 1051,
+        "question": "What is the baseline throughput in MB/s for the m7a.large instance size with 128 KiB I/O?",
+        "ground_truth": "81.25 MB/s",
+        "source_text": "Amazon Elastic Compute Cloud User Guide\nInstance \nsize\nBaseline \nbandwidth \n(Mbps)\nMaximum \nbandwidth \n(Mbps)\nBaseline \nthroughpu \nt (MB/s, \n128 KiB I/\nO)\nMaximum \nthroughpu \nt (MB/s, \n128 KiB I/\nO)\nBaseline \nIOPS (16 \nKiB I/O)\nMaximum \nIOPS (16 \nKiB I/O)\nm6in.meta \nl 2\n100000 12500.0 400000\nm7a.mediu \nm 1\n325 10000 40.62 1250.00 2500 40000\nm7a.large\n1\n650 10000 81.25 1250.00 3600 40000\nm7a.xlarg \ne 1\n1250 10000 156.25 1250.00 6000 40000\nm7a.2xlar \nge 1\n2500 10000 312.50 1250.00 12000 40000\nm7a.4xlar \nge 1\n5000 10000 625.00 1250.00 20000 40000\nm7a.8xlar \nge 2\n10000 1250.0 40000\nm7a.12xla \nrge 2\n15000 1875.0 60000\nm7a.16xla \nrge 2\n20000 2500.0 80000\nm7a.24xla \nrge 2\n30000 3750.0 120000\nm7a.32xla \nrge 2\n40000 5000.0 160000\nEBS optimization 461"
+    },
+    {
+        "id": "15",
+        "source_chunk_id": 3636,
+        "question": "What command should be used to add execute permissions to the NVIDIA driver installation utility?",
+        "ground_truth": "chmod +x NVIDIA-Linux-x86_64*.run",
+        "source_text": "versions using the following command.\n[ec2-user ~]$ aws s3 ls --recursive s3://ec2-linux-nvidia-drivers/\n7. Add permissions to run the driver installation utility using the following command.\n[ec2-user ~]$ chmod +x NVIDIA-Linux-x86_64*.run\n8. Run the self-install script as follows to install the GRID driver that you downloaded. For \nexample:\n[ec2-user ~]$ sudo /bin/sh ./NVIDIA-Linux-x86_64*.run\nNVIDIA drivers 1786"
+    },
+    {
+        "id": "16",
+        "source_chunk_id": 3401,
+        "question": "What is the title of the user guide referenced in the text chunk?",
+        "ground_truth": "Amazon Elastic Compute Cloud User Guide",
+        "source_text": "Amazon Elastic Compute Cloud User Guide\nV-234802, V-234807, V-234808, V-234809, V-234813, V-234815, V-234817, V-234821, \nV-234822, V-234823, V-234825, V-234827, V-234828, V-234829, V-234830, V-234832, \nV-234833, V-234834, V-234835, V-234836, V-234837, V-234838, V-234839, V-234840, \nV-234841, V-234842, V-234843, V-234844, V-234845, V-234848, V-234854, V-234855, \nV-234856, V-234857, V-234858, V-234861, V-234862, V-234863, V-234869, V-234870, \nV-234875, V-234880, V-234881, V-234882, V-234883, V-234884, V-234885, V-234886, \nV-234887, V-234888, V-234889, V-234891, V-234895, V-234896, V-234897, V-234899, \nV-234900, V-234901, V-234902, V-234903, V-234904, V-234906, V-234910, V-234911, \nV-234912, V-234913, V-234914, V-234918, V-234924, V-234928, V-234932, V-234937, \nV-234938, V-234939, V-234940, V-234941, V-234942, V-234943, V-234944, V-234945, \nV-234946, V-234947, V-234948, V-234949, V-234950, V-234951, V-234952, V-234954,"
+    },
+    {
+        "id": "17",
+        "source_chunk_id": 194,
+        "question": "How can you find a paid AMI in the AWS console?",
+        "ground_truth": "Open the Amazon EC2 console at https://console.aws.amazon.com/ec2/ to find a paid AMI.",
+        "source_text": "AMIs, Reserved Instances, and Spot Instances.\nFor information about how to sell your AMI on the AWS Marketplace, see Selling in AWS \nMarketplace.\nFind a paid AMI\nA paid AMI is an Amazon Machine Image (AMI) that is available for purchase. A paid AMI also has a \nproduct code. You can ﬁnd AMIs that are available for purchase in the AWS Marketplace.\nConsole\nTo ﬁnd a paid AMI\n1. Open the Amazon EC2 console at https://console.aws.amazon.com/ec2/.\nSell your AMI in the AWS Marketplace 37"
+    },
+    {
+        "id": "18",
+        "source_chunk_id": 5588,
+        "question": "Which instance types support the metric 'retrans_bytes' in Amazon Elastic Compute Cloud when using EFA?",
+        "ground_truth": "Nitro v4 and later instance types that support EFA",
+        "source_text": "Amazon Elastic Compute Cloud User Guide\nMetric Description Supported instance types\nrdma_read \n_resp_byt \nes\nThe number of bytes sent in response \nto rdma read operations.\nUnit: bytes\nAll instance types that support EFA\nrdma_writ \ne_recv_by \ntes\nThe number of bytes received by rdma \nwrite operations.\nUnit: bytes\nAll instance types that support EFA\nretrans_b \nytes The number of EFA SRD bytes \nretransmitted.\nUnit: count\nNitro v4 and later instance types that \nsupport EFA\nretrans_p \nkts The number of EFA SRD packets \nretransmitted.\nUnit: bytes\nNitro v4 and later instance types that \nsupport EFA\nretrans_t \nimeout_ev \nents\nThe number of times EFA SRD traﬃc \ntimed out and resulted in a network  \n path change.\nUnit: count\nNitro v4 and later instance types that \nsupport EFA\nimpaired_ \nremote_co \nnn_events\nThe number of times EFA SRD \nconnections entered an impaired state,  \n resulting in a reduced throughput rate \nlimit.\nUnit: count\nNitro v4 and later instance types that \nsupport EFA"
+    },
+    {
+        "id": "19",
+        "source_chunk_id": 4631,
+        "question": "How can you describe the instances in your Spot Fleet using the Amazon EC2 console?",
+        "ground_truth": "Select your Spot Fleet request, then choose Instances to list the Spot Instances for the Spot Fleet.",
+        "source_text": "Amazon Elastic Compute Cloud User Guide\n                    \"Key\": \"Environment\", \n                    \"Value\": \"Production\" \n                }, \n                { \n                    \"Key\": \"Another key\", \n                    \"Value\": \"Another value\" \n                } \n            ] \n        } \n    ]\n}    \nDescribe a Spot Fleet request, its instances, and event history\nYou can describe your Spot Fleet conﬁguration, the instances in your Spot Fleet, and the event \nhistory of your Spot Fleet.\nConsole\nTo describe your Spot Fleet\n1. Open the Amazon EC2 console at https://console.aws.amazon.com/ec2/.\n2. In the navigation pane, choose Spot Requests.\n3. Select your Spot Fleet request. The ID begins with sfr-. To see the conﬁguration details, \nchoose Description.\n4. To list the Spot Instances for the Spot Fleet, choose Instances.\n5. To view the history for the Spot Fleet, choose History.\nAWS CLI\nTo describe your Spot Fleet request\nUse the describe-spot-ﬂeet-requests command."
+    },
+    {
+        "id": "20",
+        "source_chunk_id": 6734,
+        "question": "What happens to previously selected metrics if they are not selected again when updating the CloudWatch agent configuration using the Amazon EC2 console?",
+        "ground_truth": "If you don't select a metric that was selected previously, it will be removed from the instance.",
+        "source_text": "previously added it to your instance, it will be removed from your instance when this process is \ncompleted.\n6. Update CloudWatch agent conﬁguration – Amazon EC2 sends the metric conﬁguration to the \nCloudWatch agent. This is the last step in the process. If it succeeds, your instances can emit data \nfor the selected metrics and Amazon EC2 deletes the conﬁguration ﬁle from Parameter Store.\nCosts\nAdditional metrics that you add during this process are billed as custom metrics. For more \ninformation about CloudWatch metrics pricing, see Amazon CloudWatch Pricing.\nInstall and conﬁgure the CloudWatch agent\nYou can use the Amazon EC2 console to install and conﬁgure the CloudWatch agent to add \nadditional metrics.\nNote\nEvery time you perform this procedure, you overwrite the existing CloudWatch agent \nconﬁguration. If you don't select a metric that was selected previously, it will be removed \nfrom the instance.\nTo install and conﬁgure the CloudWatch agent using the Amazon EC2 console"
+    },
+    {
+        "id": "21",
+        "source_chunk_id": 2233,
+        "question": "What must you do if you want to use P6e-GB200 UltraServer Capacity Blocks and when must instances be terminated?",
+        "ground_truth": "To use P6e-GB200 UltraServer Capacity Blocks, you must be opted in to the Dallas Local Zone, and you must terminate your instances at least 60 minutes before the Capacity Block end time.",
+        "source_text": "Amazon Elastic Compute Cloud User Guide\n• Ubuntu Pro\nConsiderations\nBefore you use Capacity Blocks, consider the following details and limitations.\n• If we detect impairment impacting an UltraServer Capacity Block, we will notify you but \ngenerally will not take action to terminate your instances on the Capacity Block. This is to \nminimize unintended disruption to your workloads. You can continue using the UltraServer \nCapacity Block as is after receiving this notiﬁcation or request remediation by terminating all \ninstances on the capacity block and submitting an AWS support case. After we receive your \nsupport case, we will notify you when we have completed remediation and you can relaunch \ninstances onto your UltraServer Capacity Block.\n• For P6e-GB200 UltraServer Capacity Blocks, you must terminate your instances at least 60 \nminutes before the Capacity Block end time.\n• To use P6e-GB200 UltraServer Capacity Blocks, you must be opted in to the Dallas Local Zone"
+    },
+    {
+        "id": "22",
+        "source_chunk_id": 4208,
+        "question": "What is the minimum required PowerShell version to perform the upgrade from a Xen-based instance to a Nitro-based instance?",
+        "ground_truth": "PowerShell version 3.0 or later is required to successfully perform the upgrade.",
+        "source_text": "Contents\n• Part 1: Install and upgrade AWS PV drivers\n• Part 2: Install and upgrade ENA\n• Part 3: Upgrade AWS NVMe drivers\n• Part 4: Update EC2Conﬁg and EC2Launch\n• Part 5: Install the serial port driver for bare metal instances\n• Part 6: Update power management settings\n• Part 7: Update Intel chipset drivers for new instance types\n• (Alternative) Upgrade the AWS PV, ENA, and NVMe drivers using AWS Systems Manager\nBefore you begin\nThis procedure assumes that you have a Xen-based instance, such as an M4 or C4, and you are \nmigrating to a Nitro-based instance.\nYou must use PowerShell version 3.0 or later to successfully perform the upgrade.\nMigrate to a Nitro-based instance type 2086"
+    },
+    {
+        "id": "23",
+        "source_chunk_id": 5246,
+        "question": "What are possible causes for MMIO register read operation failures according to the ENA device driver logs?",
+        "ground_truth": "The failures may be caused by an incompatible or incorrectly compiled driver, a busy hardware device, or hardware failure.",
+        "source_text": "[18512.675141] ena 0000:00:07.0: irq 51 for MSI/MSI-X\n[18512.675188] ena 0000:00:07.0: irq 52 for MSI/MSI-X\n[18512.675233] ena 0000:00:07.0: irq 53 for MSI/MSI-X\n[18512.675279] ena 0000:00:07.0: irq 54 for MSI/MSI-X\n[18512.772641] [ENA_COM: ena_com_set_hash_function] Feature 10 isn't supported\n[18512.772647] [ENA_COM: ena_com_set_hash_ctrl] Feature 18 isn't supported\n[18512.775945] ena 0000:00:07.0: Device reset completed successfully // The reset \n process is complete\nRegister read timeout\nThe ENA architecture suggests a limited usage of memory mapped I/O (MMIO) read operations. \nMMIO registers are accessed by the ENA device driver only during its initialization procedure.\nIf the driver logs (available in dmesg output) indicate failures of read operations, this may be \ncaused by an incompatible or incorrectly compiled driver, a busy hardware device, or hardware \nfailure.\nIntermittent log entries that indicate failures on read operations should not be considered an issue;"
+    },
+    {
+        "id": "24",
+        "source_chunk_id": 3815,
+        "question": "What are the versions of the AWS NVMe storage driver and ENA enhanced networking driver supported on Windows Server 2012 R2 for Nitro-based instances?",
+        "ground_truth": "AWS NVMe version 1.5.1 and ENA version 2.6.0",
+        "source_text": "section called “Manage device drivers”.\nThe following table summarizes the supported drivers for Nitro-based instances by Windows \nversion.\nVersion Storage driver Enhanced networking driver\nWindows Server 2025 AWS NVMe latest version ENA latest version\nWindows Server 2022 AWS NVMe latest version ENA latest version\nWindows Server 2019 AWS NVMe latest version ENA latest version\nWindows Server 2016 AWS NVMe latest version ENA latest version\nWindows Server 2012 R2 AWS NVMe version 1.5.1 ENA version 2.6.0\nWindows Server 2008 R2 AWS NVMe version 1.3.2 ENA version 2.2.3\nThe following table summarizes the supported drivers for Xen-based instances by Windows \nversion.\nAWS device drivers for Windows instances 1879"
+    },
+    {
+        "id": "25",
+        "source_chunk_id": 628,
+        "question": "How can you check if an AMI meets the Allowed AMIs criteria using the Amazon EC2 console?",
+        "ground_truth": "Open the Amazon EC2 console, choose AMIs in the navigation pane, select the AMI, then on the Details tab or in the summary area, find the Allowed image field to check if the AMI meets the Allowed AMIs criteria.",
+        "source_text": "MaximumDaysSinceCreated  : 300\nMaximumDaysSinceDeprecated: 0\nFind AMIs that are allowed\nYou can ﬁnd the AMIs that are allowed or not allowed by the current Allowed AMIs criteria.\nNote\nAllowed AMIs must be in audit mode.\nConsole\nTo check whether an AMI meets the Allowed AMIs criteria\n1. Open the Amazon EC2 console at https://console.aws.amazon.com/ec2/.\n2. In the navigation pane, choose AMIs.\n3. Select the AMI.\n4. On the Details tab (if you selected the checkbox) or in the summary area (if you selected \nthe AMI ID), ﬁnd the Allowed image ﬁeld.\nAllowed AMIs 249"
+    },
+    {
+        "id": "26",
+        "source_chunk_id": 3655,
+        "question": "What command should be used to add execute permissions to the NVIDIA driver installation utility?",
+        "ground_truth": "chmod +x nvidia-drivers/NVIDIA-Linux-x86_64*-grid.run",
+        "source_text": "[ec2-user ~]$ unzip latest-driver-name.zip -d nvidia-drivers\n8. Add permissions to run the driver installation utility using the following command:\n[ec2-user ~]$ chmod +x nvidia-drivers/NVIDIA-Linux-x86_64*-grid.run\n9. Run the installer using the following command:\n[ec2-user ~]$ sudo ./nvidia-drivers/NVIDIA-Linux-x86_64*.run\nWhen prompted, accept the license agreement and specify the installation options as required \n(you can accept the default options).\nNVIDIA drivers 1795"
+    },
+    {
+        "id": "27",
+        "source_chunk_id": 2174,
+        "question": "How is the total target capacity of 480 vCPUs distributed between the m5.4xlarge and m5.12xlarge instance types in the Capacity Reservation Fleet example?",
+        "ground_truth": "The m5.4xlarge provides 16 vCPUs and is weighted 16, allowing for 30 instances (480/16=30), while the m5.12xlarge provides 48 vCPUs and is weighted 48, allowing for 10 instances (480/48=10).",
+        "source_text": "Amazon Elastic Compute Cloud User Guide\n}\nPowerShell\nTo cancel a Capacity Reservation Fleet\nUse the Stop-EC2CapacityReservationFleet cmdlet.\nStop-EC2CapacityReservationFleet ` \n    -CapacityReservationFleetId crf-abcdef01234567890\nExample Capacity Reservation Fleet conﬁgurations\nThe following example creates a Capacity Reservation Fleet that uses two instance types:\nm5.4xlarge and m5.12xlarge.\nIt uses a weighting system based on the number of vCPUs provided by the speciﬁed instance types. \nThe total target capacity is 480 vCPUs. The m5.4xlarge provides 16 vCPUs and gets a weight of\n16, while the m5.12xlarge provides 48 vCPUs and gets a weight of 48. This weighting system \nconﬁgures the Capacity Reservation Fleet to reserve capacity for either 30 m5.4xlarge instances \n(480/16=30), or 10 m5.12xlarge instances (480/48=10).\nThe Fleet is conﬁgured to prioritize the m5.12xlarge capacity and gets priority of 1, while the"
+    },
+    {
+        "id": "28",
+        "source_chunk_id": 1267,
+        "question": "For the instance type c8gn.24xlarge, what are the default number of vCPUs, default CPU cores, default threads per core, and valid CPU cores?",
+        "ground_truth": "For the instance type c8gn.24xlarge, the default number of vCPUs is 96, the default CPU cores is 96, the default threads per core is 1, and the valid CPU cores range from 1 to 96.",
+        "source_text": "Amazon Elastic Compute Cloud User Guide\nInstance \ntype\nDefault \nvCPUs\nDefault CPU \ncores\nDefault \nthreads per \ncore\nValid CPU \ncores\nValid \nthreads per \ncore\nc8gn.24xl \narge\n96 96 1 1, 2, 3, 4, 5, \n6, 7, 8, 9, 10, \n11, 12, 13, \n14, 15, 16, \n17, 18, 19, \n20, 21, 22, \n23, 24, 25, \n26, 27, 28, \n29, 30, 31, \n32, 33, 34, \n35, 36, 37, \n38, 39, 40, \n41, 42, 43, \n44, 45, 46, \n47, 48, 49, \n50, 51, 52, \n53, 54, 55, \n56, 57, 58, \n59, 60, 61, \n62, 63, 64, \n65, 66, 67, \n68, 69, 70, \n71, 72, 73, \n74, 75, 76, \n77, 78, 79, \n80, 81, 82, \n83, 84, 85, \n86, 87, 88, \n89, 90, 91, \n92, 93, 94, \n95, 96\n1\nCPU options 657"
+    },
+    {
+        "id": "29",
+        "source_chunk_id": 198,
+        "question": "What must you do before you can launch an Amazon EC2 instance using a paid AMI from the AWS Marketplace?",
+        "ground_truth": "You must sign up for (purchase) the paid AMI before you can launch an Amazon EC2 instance using the AMI.",
+        "source_text": "Object -First 1).ImageId\nPurchase a paid AMI in the AWS Marketplace\nYou must sign up for (purchase) a paid AMI before you can launch an Amazon EC2 instance using \nthe AMI.\nTypically a seller of a paid AMI presents you with information about the AMI, including its price and \na link where you can buy it. When you click the link, you're ﬁrst asked to log into AWS, and then \nyou can purchase the AMI.\nPurchase a paid AMI 39"
+    },
+    {
+        "id": "30",
+        "source_chunk_id": 2441,
+        "question": "What must you do to associate a security group with a network interface in Amazon EC2?",
+        "ground_truth": "You must choose a security group from the same VPC as the subnet for the network interface.",
+        "source_text": "Amazon Elastic Compute Cloud User Guide\nprovide the instance with the IPv6 DNS name server. During this initial delay, the instance \nmight not resolve public domains. You can change the conﬁguration ﬁle and re-image your \nAMI so that the ﬁle has the IPv6 DNS name server address immediately on booting.\n• Security groups: The security groups to associate with the network interface. You must choose \na security group from the same VPC as the subnet for the network interface.\n• (Launch templates only) Auto-assign public IP: Specify whether your instance receives a \npublic IPv4 address. By default, instances in a default subnet receive a public IPv4 address \nand instances in a nondefault subnet do not. You can select Enable or Disable to override the \nsubnet's default setting. For more information, see Public IPv4 addresses.\n• Primary IP: A private IPv4 address from the range of your subnet. Leave blank to let Amazon \nEC2 choose a private IPv4 address for you."
+    },
+    {
+        "id": "31",
+        "source_chunk_id": 6625,
+        "question": "What steps should you take to maintain normal operation during a scheduled maintenance window for an Amazon EC2 instance?",
+        "ground_truth": "Launch a replacement instance from your most recent AMI, migrate all necessary data to the replacement instance before the scheduled maintenance window, and terminate the original instance.",
+        "source_text": "actions:\n• Wait for scheduled maintenance: You can wait for the maintenance to occur as scheduled.\n• Launch a replacement instance: If you want to maintain normal operation during the scheduled \nmaintenance window:\n1. Launch a replacement instance from your most recent AMI.\n2. Migrate all necessary data to the replacement instance before the scheduled maintenance \nwindow.\n3. Terminate the original instance.\nView scheduled events that aﬀect your Amazon EC2 instances\nIn addition to receiving notiﬁcation of scheduled events in email, you can check for scheduled \nevents.\nConsole\nTo view scheduled events for your instances\n1. Open the Amazon EC2 console at https://console.aws.amazon.com/ec2/.\nScheduled events 3247"
+    },
+    {
+        "id": "32",
+        "source_chunk_id": 6997,
+        "question": "What should you try if Remote Desktop can't connect to the remote computer?",
+        "ground_truth": "Try the following to resolve issues related to connecting to your instance.",
+        "source_text": "• Error using the macOS RDP client\n• RDP displays a black screen instead of the desktop\n• Unable to remotely log on to an instance with a user that is not an administrator\n• Troubleshooting Remote Desktop issues using AWS Systems Manager\n• Enable Remote Desktop on an EC2 instance with remote registry\n• I've lost my private key. How can I connect to my Windows instance?\nRemote Desktop can't connect to the remote computer\nTry the following to resolve issues related to connecting to your instance:\nWindows instance RDP issues 3439"
+    },
+    {
+        "id": "33",
+        "source_chunk_id": 5053,
+        "question": "What AWS CLI command is used to remove a reverse DNS record for an Elastic IP address?",
+        "ground_truth": "Use the reset-address-attribute command with --allocation-id and --attribute domain-name, for example: aws ec2 reset-address-attribute --allocation-id eipalloc-abcdef01234567890 --attribute domain-name.",
+        "source_text": "Amazon Elastic Compute Cloud User Guide\n6. Choose Update.\nAWS CLI\nTo remove a reverse DNS record\nUse the reset-address-attribute command.\naws ec2 reset-address-attribute \\ \n    --allocation-id eipalloc-abcdef01234567890 \\ \n    --attribute domain-name\nThe following is example output.\n{ \n    \"Addresses\": [ \n        { \n            \"PublicIp\": \"192.0.2.0\", \n            \"AllocationId\": \"eipalloc-abcdef01234567890\", \n            \"PtrRecord\": \"example.com.\", \n            \"PtrRecordUpdate\": { \n                \"Value\": \"example.net.\", \n                \"Status\": \"PENDING\" \n            } \n        } \n    ]\n}\nPowerShell\nTo remove a reverse DNS record\nUse the Reset-EC2AddressAttribute cmdlet.\nReset-EC2AddressAttribute ` \n    -AllocationId 'eipalloc-abcdef01234567890' ` \n    -Attribute domain-name |\nFormat-List ` \n    AllocationId, PtrRecord, PublicIp, \n    @{Name='PtrRecordUpdate';Expression={$_.PtrRecordUpdate | Format-List | Out-\nString}}\nUse reverse DNS for email applications 2470"
+    },
+    {
+        "id": "34",
+        "source_chunk_id": 797,
+        "question": "Under what conditions can you change the instance type of an EC2 instance?",
+        "ground_truth": "You can change the instance type of an EC2 instance only if it is an EBS-backed instance with a configuration that is compatible with the new instance type that you want.",
+        "source_text": "Schedule\nMigrate to a new instance type by launching a new EC2 instance\nYou can change the instance type of an EC2 instance only if it is an EBS-backed instance with \na conﬁguration that is compatible with the new instance type that you want. Otherwise, if the \nInstance type changes 328"
+    },
+    {
+        "id": "35",
+        "source_chunk_id": 2405,
+        "question": "What should you do with the Root volume (Encrypted) fields under Configure storage to stay within the Free Tier limits?",
+        "ground_truth": "Leave the Root volume (Encrypted) fields as they are (configured by default) to keep under the Free Tier limits.",
+        "source_text": "Under Conﬁgure storage, the Root volume (Encrypted) ﬁelds are conﬁgured by default. Leave \nthe settings as they are to keep under the Free Tier limits.\nSince our test instance won't store any sensitive data, we don't need additional encrypted data \nvolumes.\n10. Review the instance conﬁguration:\nIn the Summary panel on the right, you can review your high-level settings before launching \nyour instance.\n11. Launch your instance:\nWhen you're ready to launch your instance, in the Summary panel, choose Launch instance.\nAmazon EC2 quickly launches your instance using the settings that you speciﬁed. If you didn't \nspecify a setting, the default is used. A Success banner conﬁrms the launch.\nCongratulations! You've successfully launched your test instance!\nTask 5: Find your instance\nIn this task, you'll locate the instance that you just launched in the EC2 console.\nFollow these steps to ﬁnd your instance in the EC2 console\n1. Open the Instances page:\nTutorials 1240"
+    },
+    {
+        "id": "36",
+        "source_chunk_id": 4243,
+        "question": "What should you enter for the DB instance identifier and master username when configuring the database in this tutorial?",
+        "ground_truth": "Enter 'tutorial-database-1' for the DB instance identifier and leave the master username as the default 'admin'.",
+        "source_text": "tier box.\n7. Under Settings, do the following:\na. For DB instance identiﬁer, enter a name for the database. For this tutorial, enter\ntutorial-database-1.\nb. For Master username, leave the default name, which is admin.\nc. For Master password, enter a password that you can remember for this tutorial, and then, \nfor Conﬁrm password, enter the password again.\n8. Under Instance conﬁguration, for DB instance class, leave the default, which is db.t3.micro.If \nyour account qualiﬁes for the Free Tier, you can use this database class for free. For more \ninformation, see AWS Free Tier.\n9. Under Connectivity, for Compute resource, choose Don't connect to an EC2 compute \nresource because you'll connect the EC2 instance and the RDS database later in Task 3.\n(Later, in Option 2 of this tutorial, you'll try out the automatic connection feature in the RDS \nconsole by choosing Connect to an EC2 compute resource.)"
+    },
+    {
+        "id": "37",
+        "source_chunk_id": 3097,
+        "question": "What happens to user data scripts when an Amazon EC2 instance with user data execution enabled is started?",
+        "ground_truth": "The updated user data scripts are run as part of the instance start process.",
+        "source_text": "Amazon Elastic Compute Cloud User Guide\n7. Start the instance. If you enabled user data execution for subsequent reboots or starts, the \nupdated user data scripts are run as part of the instance start process.\nHow Amazon EC2 handles user data for Linux instances\nThe following examples use user data to run commands that set up a LAMP server when the \ninstance launches. In each example, the following tasks are performed:\n• The distribution software packages are updated.\nRun commands at launch 1560"
+    },
+    {
+        "id": "38",
+        "source_chunk_id": 3394,
+        "question": "List the first five STIG settings identifiers mentioned in the text chunk.",
+        "ground_truth": "V-257914, V-257915, V-257916, V-257917, V-257918",
+        "source_text": "V-257914, V-257915, V-257916, V-257917, V-257918, V-257919, V-257920, V-257921, \nV-257922, V-257923, V-257924, V-257925, V-257926, V-257927, V-257928, V-257929, \nV-257930, V-257933, V-257934, V-257935, V-257936, V-257939, V-257940, V-257942, \nV-257943, V-257944, V-257948, V-257951, V-257952, V-257953, V-257954, V-257957, \nV-257958, V-257959, V-257960, V-257961, V-257962, V-257963, V-257964, V-257965, \nV-257966, V-257967, V-257968, V-257969, V-257970, V-257971, V-257972, V-257973, \nV-257974, V-257975, V-257976, V-257977, V-257978, V-257979, V-257980, V-257982, \nV-257983, V-257985, V-257987, V-257988, V-257992, V-257993, V-257994, V-257995, \nV-257996, V-257997, V-257998, V-257999, V-258000, V-258001, V-258002, V-258003, \nSTIG settings 1674"
+    },
+    {
+        "id": "39",
+        "source_chunk_id": 611,
+        "question": "How can you determine if an AMI will be discoverable and available to users in the account when Allowed AMIs is enabled using the EC2 console and command line?",
+        "ground_truth": "In the EC2 console, the Allowed image field displays Yes or No, and the AMI Catalog displays Not allowed next to AMIs that won't be discoverable. In the command line, the describe-image operation includes \"ImageAllowed\": true or false to indicate discoverability and availability.",
+        "source_text": "• The ImageCriteria are applied, but no restrictions are placed on AMI discoverability or usage.\n• In the EC2 console, for each AMI, the Allowed image ﬁeld displays either Yes or No to indicate \nwhether the AMI will be discoverable and available to users in the account when Allowed AMIs is \nenabled.\n• In the command line, the response for the describe-image operation includes\n\"ImageAllowed\": true or \"ImageAllowed\": false to indicate whether the AMI will be \ndiscoverable and available to users in the account when Allowed AMIs is enabled.\n• In the EC2 console, the AMI Catalog displays Not allowed next to AMIs that won't be \ndiscoverable or available to users in the account when Allowed AMIs is enabled.\nAllowed AMIs 241"
+    },
+    {
+        "id": "40",
+        "source_chunk_id": 2177,
+        "question": "What is the name of the service-linked role used by Capacity Reservation Fleet and what permissions does it have?",
+        "ground_truth": "The service-linked role used by Capacity Reservation Fleet is named AWSServiceRoleForEC2CapacityReservationFleet. It has permissions to create, describe, modify, and cancel Capacity Reservation Fleet, including a trust policy and a permissions policy that cannot be attached to any other IAM entity, and only Capacity Reservation Fleet can assume this role unless otherwise defined.",
+        "source_text": "the permissions that the service requires to call other AWS services on your behalf.\nA service-linked role makes setting up Capacity Reservation Fleet easier because you don’t have \nto manually add the necessary permissions. Capacity Reservation Fleet deﬁnes the permissions of \nits service-linked roles, and unless deﬁned otherwise, only Capacity Reservation Fleet can assume \nits roles. The deﬁned permissions include the trust policy and the permissions policy, and that \npermissions policy cannot be attached to any other IAM entity.\nYou can delete a service-linked role only after ﬁrst deleting their related resources. This protects \nyour Capacity Reservation Fleet resources because you can't inadvertently remove permission to \naccess the resources.\nService-linked role permissions for Capacity Reservation Fleet\nCapacity Reservation Fleet uses the service-linked role named\nAWSServiceRoleForEC2CapacityReservationFleet to create, describe, modify, and cancel Capacity"
+    },
+    {
+        "id": "41",
+        "source_chunk_id": 1809,
+        "question": "What is returned when SingleAvailabilityZone is set to true in the AWS CLI configuration for Spot Instances?",
+        "ground_truth": "A scored list of Availability Zones is returned.",
+        "source_text": "Amazon Elastic Compute Cloud User Guide\n        \"Region\": \"us-east-1\", \n        \"Score\": 7 \n    }, \n    { \n        \"Region\": \"us-west-1\", \n        \"Score\": 5 \n    },   \n   ...\nExample output if SingleAvailabilityZone is set to true – a scored list of Availability \nZones is returned.\n\"SpotPlacementScores\": [ \n    { \n        \"Region\": \"us-east-1\", \n        \"AvailabilityZoneId\": \"use1-az1\", \n        \"Score\": 8 \n    }, \n    { \n        \"Region\": \"us-east-1\", \n        \"AvailabilityZoneId\": \"usw2-az3\", \n        \"Score\": 6 \n    }, \n   ...\nExample conﬁgurations\nWhen using the AWS CLI, you can use the following example conﬁgurations.\nExample conﬁgurations\n• Example: Specify instance types and target capacity\n• Example: Specify instance types, and target capacity in terms of memory\n• Example: Specify attributes for attribute-based instance type selection\n• Example: Specify attributes for attribute-based instance type selection and return a scored list of \nAvailability Zones\nSpot Instances 970"
+    },
+    {
+        "id": "42",
+        "source_chunk_id": 2505,
+        "question": "How can you find the IPv6 address of your Amazon EC2 instance using the Amazon EC2 console?",
+        "ground_truth": "Select the instance in the Instances pane of the Amazon EC2 console, then under the Details tab in the instance information section on the lower half of the page, look for the IPv6 address.",
+        "source_text": "Amazon Elastic Compute Cloud User Guide\nIf you assigned an IPv6 address to your instance, you can optionally connect to the instance \nusing its IPv6 address instead of a public IPv4 address or public IPv4 DNS hostname. Your local \ncomputer must have an IPv6 address and must be conﬁgured to use IPv6. You can get the \nIPv6 address of your instance from the Amazon EC2 console. Check the IPv6 IPs column of the\nInstances pane. Or, you can ﬁnd the IPv6 address in the instance information section. When you \nselect the instance in the Instances pane of the Amazon EC2 console, information about that \ninstance will appear on the lower half of the page. Under the Details tab, look for IPv6 address.\nIf you prefer, you can use the describe-instances (AWS CLI) or Get-EC2Instance (AWS Tools for \nWindows PowerShell) commands. For more information about IPv6, see IPv6 addresses.\n• (Linux instances) Get the username for your instance."
+    },
+    {
+        "id": "43",
+        "source_chunk_id": 6265,
+        "question": "How do you configure the root volume to persist when launching an Amazon EC2 instance using the console?",
+        "ground_truth": "Open the Amazon EC2 console, choose Instances and then Launch instances, select an AMI, instance type, key pair, and network settings, then under Configure storage choose Advanced, expand the root volume, set Delete on termination to No, and finally choose Launch instance.",
+        "source_text": "• Conﬁgure the root volume to persist for an existing instance\n• Conﬁrm that a root volume is conﬁgured to persist\nConﬁgure the root volume to persist during instance launch\nYou can conﬁgure the root volume to persist when you launch an instance.\nConsole\nTo conﬁgure the root volume to persist when you launch an instance\n1. Open the Amazon EC2 console at https://console.aws.amazon.com/ec2/.\n2. In the navigation pane, choose Instances and then choose Launch instances.\n3. Choose an Amazon Machine Image (AMI), choose and instance type, choose a key pair, and \nconﬁgure your network settings.\n4. For Conﬁgure storage, choose Advanced.\n5. Expand the root volume.\n6. For Delete on termination, choose No.\n7. When you are ﬁnished conﬁguring your instance, choose Launch instance.\nKeep root volume after instance termination 3075"
+    },
+    {
+        "id": "44",
+        "source_chunk_id": 3744,
+        "question": "What steps must be followed to verify that the AWS PV driver upgrade was successful after using Distributor to install or upgrade the driver?",
+        "ground_truth": "After the upgrade and instance reboot, wait for the instance to pass both health checks in the Amazon EC2 console, connect to the instance using Remote Desktop, run the PowerShell command Get-ItemProperty HKLM:\\SOFTWARE\\Amazon\\PVDriver, and verify that the driver version matches the latest version listed in the Driver Version.",
+        "source_text": "4. For the instructions for how to install or upgrade the AWS PV driver package using Distributor, \nsee the procedures in Install or update packages in the AWS Systems Manager User Guide.\n5. For Name, choose AWSPVDriver.\n6. For Installation type, select Uninstall and reinstall.\n7. Conﬁgure the other parameters for the package as necessary and run installation or upgrade \nusing the referenced procedure in Step 4.\nAfter running the Distributor package, the instance automatically reboots and then upgrades \nthe driver. The instance will not be available for up to 15 minutes.\n8. After the upgrade is complete, and the instance passes both health checks in the Amazon EC2 \nconsole, verify that the new driver was installed by connecting to the instance using Remote \nDesktop.\n9. After you are connected, run the following PowerShell command:\nGet-ItemProperty HKLM:\\SOFTWARE\\Amazon\\PVDriver\n10. Verify that the driver version is the same as the latest version listed in the Driver Version"
+    },
+    {
+        "id": "45",
+        "source_chunk_id": 615,
+        "question": "What AWS CLI command can be used to identify instances launched with AMIs that don't meet the specified criteria?",
+        "ground_truth": "Run the describe-instance-image-metadata command and filter the response to identify any instances that were launched with AMIs that don't meet the specified criteria.",
+        "source_text": "Amazon Elastic Compute Cloud User Guide\nCLI: Run the describe-instance-image-metadata command and ﬁlter the response to identify any \ninstances that were launched with AMIs that don't meet the speciﬁed criteria.\nFor the console and CLI instructions, see Find instances launched from AMIs that aren't allowed.\n4. Enable Allowed AMIs\nOnce you've conﬁrmed that the criteria will not adversely aﬀect expected business processes, \nenable Allowed AMIs.\n5. Monitor instance launches\nContinue to monitor instance launches from AMIs across your applications and the AWS \nmanaged services you use, such as Amazon EMR, Amazon ECR, Amazon EKS, and AWS Elastic \nBeanstalk. Check for any unexpected issues and make necessary adjustments to the Allowed \nAMIs criteria.\n6. Pilot new AMIs\nTo test third-party AMIs that do not comply with your current Allowed AMIs settings, AWS \nrecommends the following approaches:\n• Use a separate AWS account: Create an account with no access to your business-critical"
+    },
+    {
+        "id": "46",
+        "source_chunk_id": 2448,
+        "question": "Which volume types require specifying the number of I/O operations per second (IOPS) when configuring an Amazon EBS volume?",
+        "ground_truth": "The io1, io2, and gp3 volume types require specifying the number of I/O operations per second (IOPS).",
+        "source_text": "Amazon Elastic Compute Cloud User Guide\n• Storage type: Select Amazon EBS or instance store volumes to associate with your instance. \nThe volume types available in the list depend on the instance type that you've chosen. For more \ninformation, see Instance store temporary block storage for EC2 instances and Amazon EBS \nvolumes.\n• Device name: Select from the list of available device names for the volume.\n• Snapshot: Select the snapshot from which to restore the volume. You can search for available \nshared and public snapshots by entering text into the Snapshot ﬁeld.\n• Size (GiB): For EBS volumes, you can specify a storage size.\n• Volume type: For EBS volumes, select a volume type. For more information, see Amazon EBS \nvolume types in the Amazon EBS User Guide.\n• IOPS: If you have selected the io1, io2 , or or gp3 volume type, then you can enter the number \nof I/O operations per second (IOPS) that the volume can support. Required for io1, io2, and gp3"
+    },
+    {
+        "id": "47",
+        "source_chunk_id": 2308,
+        "question": "What IAM permission is required for a principal to change the Default version associated with a launch template?",
+        "ground_truth": "The principal must have the ec2:ModifyLaunchTemplate permission for the launch template in an IAM policy.",
+        "source_text": "To change the Default version that is associated with a launch template, the principal must have \nthe ec2:ModifyLaunchTemplate permission for the launch template in an IAM policy.\nFor example, the following IAM policy statement gives the principal permission to modify launch \ntemplates only if the launch template uses the speciﬁed tag (environment=production). \nAlternatively, you can specify one or multiple launch template ARNs, or you can specify a\nResource value of \"*\" without the Condition element to allow the principal to modify any \nlaunch template in the account.\n{ \n    \"Sid\": \"IAMPolicyForModifyingLaunchTemplates\", \n    \"Action\": \"ec2:ModifyLaunchTemplate\", \n    \"Effect\": \"Allow\", \n    \"Resource\": \"*\", \n    \"Condition\": { \n        \"StringEquals\": { \n            \"aws:ResourceTag/environment\": \"production\" \n        } \nPermissions 1195"
+    },
+    {
+        "id": "48",
+        "source_chunk_id": 739,
+        "question": "What factors are included in the naming conventions of instance types?",
+        "ground_truth": "Instance type names are based on instance family, generation, processor family, capabilities, and size.",
+        "source_text": "instance type includes one or more instance sizes, allowing you to scale your resources to the \nrequirements of your target workload.\nInstance type naming conventions\nNames are based on instance family, generation, processor family, capabilities, and size. For more \ninformation, see Naming conventions in the Amazon EC2 Instance Types Guide.\nFind an instance type\nTo determine which instance types meet your requirements, such as supported Regions, compute \nresources, or storage resources, see Find an Amazon EC2 instance type and Amazon EC2 instance \ntype speciﬁcations in the Amazon EC2 Instance Types Guide.\nAvailable instance types 305"
+    },
+    {
+        "id": "49",
+        "source_chunk_id": 5549,
+        "question": "What is the maximum IP network bandwidth supported on p5.48xlarge and p5e.48xlarge instances and how does it affect the total available EFA bandwidth?",
+        "ground_truth": "The maximum IP network bandwidth supported is 800 Gbps, and because EFA and IP network traffic share the same resources with a total bandwidth capacity of 3,200 Gbps, the bandwidth used by IP traffic reduces the bandwidth available for EFA traffic. For example, using 400 Gbps for IP bandwidth allows up to 2,800 Gbps for EFA bandwidth.",
+        "source_text": "Amazon Elastic Compute Cloud User Guide\nEFA conﬁguration for a P5 and P5e instances\np5.48xlarge and p5e.48xlarge instances support 32 network cards and have a total network \nbandwidth capacity of 3,200 Gbps, of which up to 800 Gbps can be utilized for IP network traﬃc. \nBecause EFA and IP network traﬃc share the same underlying resources, bandwidth used by one \nwill reduce the bandwidth that is available to the other. This means that you can distribute the \nnetwork bandwidth between EFA traﬃc and IP traﬃc in any combination, as long as the total \nbandwidth does not exceed 3,200 Gbps and IP bandwidth does not exceed 800 Gbps. For example, \nif you use 400 Gbps for IP bandwidth, you can achieve up to 2,800 Gbps of EFA bandwidth at the \nsame time.\nUse case 1: Save IP addresses and avoid potential Linux IP issues\nThis conﬁguration provides up to 3200 Gbps of EFA networking bandwidth and up to 100 Gbps"
+    }
+]
