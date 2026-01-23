@@ -94,7 +94,7 @@ def generate_vectors(json_filename: str, embedding_size: str = "medium", strateg
     """
     Docstring for generate_vectors
     
-    :param json_filename: Description
+    :param json_filename: 
     :type json_filename: str
     :param embedding_size: Description
     :type embedding_size: str
