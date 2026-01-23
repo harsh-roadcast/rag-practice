@@ -1,0 +1,69 @@
+version: '3.8'
+
+services:
+  # 1. FastAPI Backend
+  api:
+    build: .
+    container_name: rag_api
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000
+    volumes:
+      - ./data:/app/data  # Persist uploaded PDFs and index registry
+      - ./.env:/app/.env
+    ports:
+      - "8000:8000"
+    environment:
+      - CELERY_BROKER_URL=redis://redis:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis:6379/0
+      - ES_URL=http://elasticsearch:9200
+    depends_on:
+      - elasticsearch
+      - redis
+    restart: always
+
+  # 2. Celery Worker (Background Ingestion)
+  worker:
+    build: .
+    container_name: rag_worker
+    command: celery -A app.services.ingest.celery_app worker --loglevel=info
+    volumes:
+      - ./data:/app/data  # Needs access to the same files as API
+      - ./.env:/app/.env
+    environment:
+      - CELERY_BROKER_URL=redis://redis:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis:6379/0
+      - ES_URL=http://elasticsearch:9200
+    depends_on:
+      - elasticsearch
+      - redis
+    # Workers can be CPU intensive; LIMIT them on small instances
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 1g
+    restart: always
+
+  # 3. Vector Database
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.17.0
+    container_name: elasticsearch
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - ES_JAVA_OPTS=-Xms1g -Xmx1g  # Keep heap low for cost savings
+    volumes:
+      - es_data:/usr/share/elasticsearch/data
+    deploy:
+      resources:
+        limits:
+          memory: 2g
+    restart: always
+
+  # 4. Message Broker
+  redis:
+    image: redis:7-alpine
+    container_name: rag_redis
+    restart: always
+
+volumes:
+  es_data:

@@ -8,7 +8,8 @@ services:
     environment:
       - discovery.type=single-node
       - xpack.security.enabled=false    # Disable login/HTTPS for easy dev
-      - ES_JAVA_OPTS=-Xms1g -Xmx1g      # CRITICAL: Limit RAM to 1GB
+      - ES_JAVA_OPTS=-Xms512m -Xmx512m      # CRITICAL: Limit RAM to 1GB
+      - memory=1g
     ports:
       - "9200:9200"
     volumes:

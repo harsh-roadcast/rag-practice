@@ -14,21 +14,20 @@ except ImportError:
     pass
 
 # Updated imports for compatibility
-from langchain_openai import ChatOpenAI, OpenAIEmbeddings
-from langchain_community.vectorstores import ElasticsearchStore
-from langchain_community.embeddings import HuggingFaceEmbeddings
+from langchain_openai import ChatOpenAI
+from langchain_elasticsearch import ElasticsearchStore
+from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_core.prompts import ChatPromptTemplate
 
 # Ragas Imports
-try:
-    from ragas.metrics.collections import answer_relevancy, faithfulness
-except ImportError:
-    from ragas.metrics import answer_relevancy, faithfulness
+from ragas.metrics import Faithfulness, AnswerRelevancy
+from ragas import evaluate
+from datasets import Dataset
 
 load_dotenv()
 
 # --- CONFIGURATION ---
-GOLD_DATA_FILE = "benchmark/gold/ec2-ug_gold_responses.json"
+GOLD_DATA_FILE = "benchmark/gold/aws-overview_gold_responses.json"
 RESULTS_FILE = "benchmark/results/elastic_benchmark_results.csv"
 INDEX_REGISTRY_PATH = "data/output/index_registry.json"
 
@@ -41,6 +40,11 @@ EMBEDDING_MODELS = {
     "medium": "BAAI/bge-base-en-v1.5",
     "large": "BAAI/bge-large-en-v1.5"
 }
+
+metrics_list = [
+    Faithfulness(),
+    AnswerRelevancy()
+]
 
 def load_configurations_from_registry():
     """
@@ -119,7 +123,7 @@ def run_benchmark():
         
     all_results = []
     
-    # Initialize LLM (GPT-4o-mini for cost savings) for answer generation
+    # Initialize LLM (GPT-4.1-mini for cost savings) for answer generation
     llm = ChatOpenAI(model="gpt-4.1-mini", temperature=0)
     
     template = """Answer the question based only on the following context:
@@ -224,9 +228,9 @@ def run_benchmark():
         try:
             results = evaluate(
                 dataset,
-                metrics=[faithfulness, answer_relevancy],
+                metrics=metrics_list,
                 llm=eval_llm,
-                embeddings=OpenAIEmbeddings(model="text-embedding-3-small") 
+                embeddings=HuggingFaceEmbeddings(model_name=EMBEDDING_MODELS["small"]) 
             )
             # Ragas 0.4.x Result access
             faithfulness_score = results["faithfulness"]

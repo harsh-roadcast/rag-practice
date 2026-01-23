@@ -2,13 +2,16 @@ import subprocess
 import sys
 import os
 
-MODES = [
-    ("recursive", "small"),
-    ("recursive", "medium"),
-    ("recursive", "large"),
+MODES = [ 
     ("length", "small"),
-    ("length", "medium"),
-    ("length", "large")
+    ("length", "medium"),   
+    ("length", "large"),
+    ("recursive", "small"),
+    ("recursive", "medium"),   
+    ("recursive", "large"),
+    ("semantic", "small"),
+    ("semantic", "medium"),   
+    ("semantic", "large")
 ]
 
 PYTHON_EXE = sys.executable

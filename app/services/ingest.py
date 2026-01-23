@@ -19,6 +19,11 @@ celery_app = Celery(
     backend="redis://localhost:6379/0"
 )
 
+# Configure Celery to use spawn instead of fork for macOS compatibility
+celery_app.conf.update(
+    worker_pool='solo',  # Use solo pool for macOS compatibility
+)
+
 # Define where to save the JSON files
 OUTPUT_DIR = "data/output"
 os.makedirs(OUTPUT_DIR, exist_ok=True)
@@ -125,11 +130,9 @@ def generate_vectors(json_filename: str, embedding_size: str = "medium", strateg
     except Exception as e:
         return {"status": "error", "message": f"Could not connect to Elasticsearch: {str(e)}"}
 
-
-    
     
     vectors = []
-    batch_size = 50  # Process 50 chunks at a time (Safe for CPU)
+    batch_size = 1  # Process 1 chunk at a time (Safe for CPU)
     total_chunks = len(data)
     print(f"worker: Processing {total_chunks} chunks in batches of {batch_size}...")
 
@@ -181,8 +184,8 @@ def process_document_task(file_path: str, strategy: str = "recursive", embedding
     # 1. Load the PDF
     try:
         loader = PyPDFLoader(file_path)
-        pages = loader.load()
-        print(f"worker: Loaded {len(pages)} pages.")
+        pages = loader.lazy_load()
+        print(f"worker: PDFLoader Initialized (Lazy mode)")
     except Exception as e:
         return f"Error loading PDF: {str(e)}"
 

@@ -31,7 +31,6 @@ class VectorDB:
             }
         }
 
-        # FIXED: Use 'mappings=' instead of 'body='
         try:
             self.es_client.indices.create(index=index_name, mappings=index_mapping)
             print(f"vector_db: ✅ Created index '{index_name}' successfully.")

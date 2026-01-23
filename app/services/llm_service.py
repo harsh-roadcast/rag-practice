@@ -55,4 +55,11 @@ class LLMService:
         context_text = self._format_context(context_chunks)
         return self.chain.invoke({"context": context_text, "question": query})
 
-llm_service = LLMService()
+# Lazy initialization - will be created when first accessed
+_llm_service = None
+
+def get_llm_service():
+    global _llm_service
+    if _llm_service is None:
+        _llm_service = LLMService()
+    return _llm_service

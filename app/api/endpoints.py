@@ -17,7 +17,7 @@ from app.services.ingest import (
 from app.core.config import QueryRequest, QueryResponse, EmbeddingRequest
 from app.core.embedding import embeddings_base
 from app.services.vector_db import vector_db
-from app.services.llm_service import llm_service
+from app.services.llm_service import get_llm_service
     
 
 router = APIRouter()
@@ -169,7 +169,7 @@ async def process_query_rag(request: QueryRequest):
             detail="Retrieved chunks did not contain any text content to feed the LLM."
         )
 
-    answer = llm_service.get_answer(request.question, context_chunks)
+    answer = get_llm_service().get_answer(request.question, context_chunks)
     sources = []
     for chunk in context_chunks:
         metadata = dict(chunk["metadata"])

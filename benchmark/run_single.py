@@ -18,14 +18,11 @@ from app.services.ingest import process_document_task, generate_vectors, celery_
 from app.api.endpoints import parse_chunk_metadata
 
 # Import LangChain / Ragas
-from langchain_openai import ChatOpenAI, OpenAIEmbeddings
-from langchain_community.vectorstores import ElasticsearchStore
-from langchain_community.embeddings import HuggingFaceEmbeddings
+from langchain_openai import ChatOpenAI
+from langchain_elasticsearch import ElasticsearchStore
+from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_core.prompts import ChatPromptTemplate
-try:
-    from ragas.metrics.collections import answer_relevancy, faithfulness
-except ImportError:
-    from ragas.metrics import answer_relevancy, faithfulness
+from ragas.metrics import Faithfulness, AnswerRelevancy
 from ragas import evaluate
 from datasets import Dataset
 
@@ -36,8 +33,8 @@ celery_app.conf.task_eager_propagates = True
 load_dotenv()
 
 # --- CONSTANTS ---
-PDF_SOURCE = "data/manuals/ec2-ug.pdf"
-GOLD_DATA_FILE = "benchmark/gold/ec2-ug_gold_responses.json"
+PDF_SOURCE = "data/manuals/aws-overview.pdf"
+GOLD_DATA_FILE = "benchmark/gold/aws-overview_gold_responses.json"
 RESULTS_FILE = "benchmark/results/final_benchmark_results.csv"
 
 EMBEDDING_MODELS = {
@@ -46,13 +43,18 @@ EMBEDDING_MODELS = {
     "large": "BAAI/bge-large-en-v1.5"
 }
 
+metrics_list = [
+    Faithfulness(),
+    AnswerRelevancy()
+]
+
 def ensure_data_exists(strategy, size):
     """
     Ensures the chunk JSON and Elasticsearch Index exist.
     """
     # 1. Check for JSON file
     # Construction logic matches ingest.py: f"{base_name}_{strategy}_{embedding_size}.json"
-    base_name = "ec2-ug" # Derived from filename
+    base_name = "aws-overview" # Derived from filename
     expected_filename = f"{base_name}_{strategy}_{size}.json"
     expected_path = os.path.join("data/output", expected_filename)
     
@@ -67,9 +69,6 @@ def ensure_data_exists(strategy, size):
         print(f"   ✅ Found chunk file: {expected_filename}")
 
     # 2. Re-Index to Elasticsearch (Always rename/reindex to ensure chunk_id presence)
-    # The index name logic in ingest.py is: f"rag_{Path(json_filename).stem}"
-    # But wait, ingest.py uses 'rag_' prefix.
-    # We will force re-indexing to ensure metadata is correct for benchmarking.
     print(f"⚙️ [Setup] Updating Index for {strategy}-{size}...")
     try:
         # We invoke generate_vectors.apply() to run it locally
@@ -118,7 +117,11 @@ def run_benchmark_for_config(strategy, size, index_name):
         
         # 1. Retrieval
         t0 = time.perf_counter()
-        docs = retriever.invoke(q)
+        try:
+            docs = retriever.invoke(q)
+        except Exception as e:
+            print(f"   ❌ Retrieval failed for Q{i}: {e}")
+            continue
         t1 = time.perf_counter()
         
         # 2. Hit Rate Check
@@ -153,9 +156,9 @@ def run_benchmark_for_config(strategy, size, index_name):
     
     scores = evaluate(
         dataset,
-        metrics=[faithfulness, answer_relevancy],
+        metrics=metrics_list,
         llm=ChatOpenAI(model="gpt-4.1-mini"),
-        embeddings=OpenAIEmbeddings(model="text-embedding-3-small")
+        embeddings=HuggingFaceEmbeddings(model_name=EMBEDDING_MODELS["small"])
     )
     
     # Aggregate
